@@ -25,7 +25,7 @@ const FlightSearch = ({ locations }: { locations: Location[] }) => {
   const source = searchParams.get("source");
   const destination = searchParams.get("destination");
   const router = useRouter();
-  
+
   React.useEffect(() => {
     if (source && destination) {
       methods.setValue("source", source);
@@ -34,9 +34,7 @@ const FlightSearch = ({ locations }: { locations: Location[] }) => {
   }, [source, destination, methods]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    router.push(`/?source=${data.source}&destination=${data.destination}`, {
-      scroll: false,
-    });
+    router.push(`/?source=${data.source}&destination=${data.destination}`);
   };
 
   return (
@@ -62,6 +60,16 @@ const FlightSearch = ({ locations }: { locations: Location[] }) => {
             </div>
             <Button className="rounded-full" type="submit">
               Search
+            </Button>
+            <Button
+              className="rounded-full"
+              variant={"outline"}
+              onClick={() => {
+                methods.reset();
+                router.push("/");
+              }}
+            >
+              Clear
             </Button>
           </div>
         </form>

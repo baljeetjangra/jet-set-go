@@ -16,7 +16,7 @@ const fetchFlights = async () => {
   return res.json();
 };
 
-export default async function Home({ searchParams }: SearchParamsProps) {
+export default async function Home() {
   const data = await fetchFlights();
   const flights: Flight[] = get(data, "data.result", []);
   const locations = extractLocations(flights);
@@ -31,20 +31,8 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         <FlightSearch locations={locations} />
         <Separator />
         <FlightList
-          title={
-            !isEmpty(searchParams)
-              ? `Search for Your Flights -`
-              : `Discover a Variety of Flights -`
-          }
-          flights={
-            !isEmpty(searchParams)
-              ? filterFlightsByRoute(
-                  searchParams?.source,
-                  searchParams?.destination,
-                  flights
-                )
-              : flights
-          }
+          title={`Discover a Variety of Flights -`}
+          flights={flights}
         />
       </div>
     </main>
