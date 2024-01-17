@@ -18,16 +18,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Location } from "@/interfaces/flight";
+import { FieldValues, useFormContext } from "react-hook-form";
 
 export default function FlightInput({
   placeholder,
   locations,
+  name,
 }: {
   placeholder: string;
   locations: Location[];
+  name: string;
 }) {
+  const {
+    watch,
+    formState: { errors },
+    setValue,
+  } = useFormContext<FieldValues>();
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const value = watch(name);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -36,7 +44,9 @@ export default function FlightInput({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[300px] justify-between rounded-full"
+          className={`w-[300px] justify-between rounded-full ${
+            errors[name] ? "border-red-500" : ""
+          }`}
         >
           {value
             ? locations.find((loc: Location) => loc.value === value)?.label
@@ -44,9 +54,11 @@ export default function FlightInput({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder={placeholder} />
+
           <CommandEmpty>No location found.</CommandEmpty>
           <CommandGroup>
             {locations.map((loc) => (
@@ -54,7 +66,7 @@ export default function FlightInput({
                 key={loc.value}
                 value={loc.value}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
+                  setValue(name, currentValue === value ? "" : currentValue);
                   setOpen(false);
                 }}
               >
