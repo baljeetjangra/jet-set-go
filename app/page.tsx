@@ -2,9 +2,9 @@ import { Avatar } from "@/components/shared/Avatar";
 import FlightSearch from "@/components/shared/flight-search/FlightSearch";
 import Searchbar from "@/components/shared/Searchbar";
 import FlightList from "@/components/shared/flight/FlightList";
-import { Flight, SearchParamsProps } from "@/interfaces";
-import { get, isEmpty } from "lodash";
-import { extractLocations, filterFlightsByRoute } from "@/helper/flightHelper";
+import { Flight } from "@/interfaces";
+import { get } from "lodash";
+import { extractLocations } from "@/helper/flightHelper";
 import { Separator } from "@/components/ui/separator";
 
 const fetchFlights = async () => {
