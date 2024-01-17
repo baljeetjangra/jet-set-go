@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../../ui/button";
 import { ArrowLeftRight } from "lucide-react";
 import FlightInput from "./FlightInput";
@@ -11,18 +11,32 @@ import {
   useForm,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { schema } from "@/lib/schema";
-import { useRouter } from "next/navigation";
+import { SearchFlightFormData, searchFlightSchema } from "@/lib/schema";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SearchParamsProps } from "@/interfaces";
+import { isEmpty } from "lodash";
 
 const FlightSearch = ({ locations }: { locations: Location[] }) => {
-  const methods = useForm<FormData>({
-    resolver: zodResolver(schema),
+  const methods = useForm<SearchFlightFormData>({
+    resolver: zodResolver(searchFlightSchema),
   });
   const { handleSubmit } = methods;
+  const searchParams: any = useSearchParams();
+  const source = searchParams.get("source");
+  const destination = searchParams.get("destination");
   const router = useRouter();
+  
+  React.useEffect(() => {
+    if (source && destination) {
+      methods.setValue("source", source);
+      methods.setValue("destination", destination);
+    }
+  }, [source, destination, methods]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    router.push(`?source=${data.source}&destination=${data.destination}`);
+    router.push(`/?source=${data.source}&destination=${data.destination}`, {
+      scroll: false,
+    });
   };
 
   return (

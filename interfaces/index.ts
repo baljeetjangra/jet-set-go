@@ -1,5 +1,5 @@
-import { Flight, Location } from "./flight";
+import { Flight, Location, Airline } from "./flight";
 interface SearchParamsProps {
-  searchParams: { [key: string]: string  };
+  searchParams: { [key: string]: string };
 }
-export type { Flight, Location, SearchParamsProps };
+export type { Flight, Location, SearchParamsProps, Airline };

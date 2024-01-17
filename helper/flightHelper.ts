@@ -1,4 +1,4 @@
-import { Flight, Location } from "@/interfaces";
+import { Flight, Location, Airline } from "@/interfaces";
 import { lowerCase } from "lodash";
 
 export function extractLocations(data: Flight[]) {
@@ -46,6 +46,53 @@ export function filterFlightsByRoute(
 
     return sourceCodeMatch && destinationCodeMatch;
   });
+
+  return filteredFlights;
+}
+
+export function extractAirlines(flightData: Flight[]) {
+  const uniqueAirlines: { [key: string]: any } = {};
+
+  flightData.forEach((flight) => {
+    const airline = flight.displayData.airlines[0];
+    const key = `${airline.airlineCode}-${airline.flightNumber}`;
+
+    if (!uniqueAirlines[key]) {
+      uniqueAirlines[key] = {
+        airlineCode: airline.airlineCode,
+        airlineName: airline.airlineName,
+        flightNumber: airline.flightNumber,
+      };
+    }
+  });
+
+  return Object.values(uniqueAirlines);
+}
+
+export function filterAndSortFlights(
+  flights: Flight[],
+  selectedAirlines: string[],
+  sortByPrice: string
+) {
+  let filteredFlights = JSON.parse(JSON.stringify(flights));
+
+  // Filter by selected airlines
+  if (selectedAirlines.length > 0) {
+    filteredFlights = filteredFlights.filter((flight: Flight) =>
+      flight.displayData.airlines.some((airline: Airline) =>
+        selectedAirlines.some(
+          (selectedAirline) => selectedAirline === airline.airlineCode
+        )
+      )
+    );
+  }
+
+  // Sort by price
+  if (sortByPrice === "cheapest") {
+    filteredFlights.sort((a: Flight, b: Flight) => a.fare - b.fare);
+  } else if (sortByPrice === "fastest") {
+    filteredFlights.sort((a: Flight, b: Flight) => b.fare - a.fare);
+  }
 
   return filteredFlights;
 }

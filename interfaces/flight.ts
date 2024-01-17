@@ -14,13 +14,7 @@ export interface Flight {
       };
       depTime: string;
     };
-    airlines: [
-      {
-        airlineCode: string;
-        airlineName: string;
-        flightNumber: string;
-      }
-    ];
+    airlines: Airline[];
     stopInfo: string;
     destination: {
       airport: {
@@ -41,4 +35,10 @@ export interface Flight {
 export interface Location {
   label: string;
   value: string;
+}
+
+export interface Airline {
+  airlineCode: string;
+  airlineName: string;
+  flightNumber: string;
 }

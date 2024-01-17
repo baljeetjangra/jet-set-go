@@ -5,6 +5,7 @@ import FlightList from "@/components/shared/flight/FlightList";
 import { Flight, SearchParamsProps } from "@/interfaces";
 import { get, isEmpty } from "lodash";
 import { extractLocations, filterFlightsByRoute } from "@/helper/flightHelper";
+import { Separator } from "@/components/ui/separator";
 
 const fetchFlights = async () => {
   const res = await fetch("https://api.npoint.io/4829d4ab0e96bfab50e7");
@@ -19,14 +20,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const data = await fetchFlights();
   const flights: Flight[] = get(data, "data.result", []);
   const locations = extractLocations(flights);
-  console.log(
-    "pr",
-    filterFlightsByRoute(
-      searchParams?.source,
-      searchParams?.destination,
-      flights
-    )
-  );
 
   return (
     <main className={`flex flex-col gap-6 md:ml-56 w-full`}>
@@ -35,9 +28,14 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         <Avatar />
       </div>
       <div className="p-6 flex flex-col gap-6">
-        {/* <hr /> */}
         <FlightSearch locations={locations} />
+        <Separator />
         <FlightList
+          title={
+            !isEmpty(searchParams)
+              ? `Search for Your Flights -`
+              : `Discover a Variety of Flights -`
+          }
           flights={
             !isEmpty(searchParams)
               ? filterFlightsByRoute(
