@@ -4,22 +4,29 @@ import { Button } from "../../ui/button";
 import { ArrowLeftRight } from "lucide-react";
 import FlightInput from "./FlightInput";
 import { Location } from "@/interfaces/flight";
-import { FieldError, FormProvider, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "@/lib/schema";
+import { useRouter } from "next/navigation";
 
 const FlightSearch = ({ locations }: { locations: Location[] }) => {
   const methods = useForm<FormData>({
     resolver: zodResolver(schema),
   });
   const { handleSubmit } = methods;
+  const router = useRouter();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    router.push(`?source=${data.source}&destination=${data.destination}`);
   };
 
   return (
-    <section className="p-4 bg-gray-100 rounded-xl flex flex-col gap-8">
+    <section className="p-6 bg-gray-100 rounded-xl flex flex-col gap-8">
       <FormProvider {...methods}>
         <h1 className="text-xl font-bold">Find your perfect flight</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -39,8 +46,6 @@ const FlightSearch = ({ locations }: { locations: Location[] }) => {
                 name="destination"
               />
             </div>
-          </div>
-          <div className="flex justify-end">
             <Button className="rounded-full" type="submit">
               Search
             </Button>
