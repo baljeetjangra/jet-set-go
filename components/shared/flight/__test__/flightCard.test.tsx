@@ -2,7 +2,7 @@
 import { render } from "@testing-library/react";
 import FlightCard from "../FlightCard";
 import "@testing-library/jest-dom";
-// Sample flight data for testing
+
 const mockFlight = {
   id: "1",
   fare: 3840,
@@ -42,12 +42,11 @@ const mockFlight = {
     totalDuration: "2h 20m",
   },
 };
+
 it("renders FlightCard with correct content", () => {
   const { getByText, getByAltText } = render(
     <FlightCard flight={mockFlight} />
   );
-
-  // Assert on the presence of certain elements and content
 
   expect(getByAltText("JetSpice")).toBeInTheDocument();
   expect(getByText("JetSpice")).toBeInTheDocument();
@@ -56,5 +55,3 @@ it("renders FlightCard with correct content", () => {
   expect(getByText("Duration: 2h 20m (Non stop)")).toBeInTheDocument();
   expect(getByText(/₹3840/)).toBeInTheDocument();
 });
-
-// You can add more test cases to cover other aspects of the FlightCard component
