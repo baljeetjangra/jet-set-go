@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Logo = () => {
   return (
-    <div className="flex justify-center">
+    <Link href={"/"} className="flex justify-center">
       <Image
         className="my-4"
         src={"/logo.png"}
@@ -11,7 +12,7 @@ const Logo = () => {
         height={50}
         alt="company logo"
       />
-    </div>
+    </Link>
   );
 };
 

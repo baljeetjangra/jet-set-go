@@ -37,3 +37,8 @@ export interface Flight {
     totalDuration: string;
   };
 }
+
+export interface Location {
+  label: string;
+  value: string;
+}

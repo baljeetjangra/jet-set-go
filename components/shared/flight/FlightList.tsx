@@ -4,11 +4,11 @@ import FlightCard from "./FlightCard";
 
 const FlightList = ({ flights }: { flights: Flight[] }) => {
   return (
-    <div className="flex flex-wrap gap-6 mt-8">
+    <section className="flex flex-wrap gap-6 mt-8">
       {flights.map((flight: Flight) => (
         <FlightCard key={flight.id} flight={flight} />
       ))}
-    </div>
+    </section>
   );
 };
 

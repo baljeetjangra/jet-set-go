@@ -9,8 +9,11 @@ const Searchbar = () => {
         type="text"
         placeholder="Where are you going?"
         className="w-[350px] rounded-full"
+        disabled
       />
-      <Button className="rounded-full">Search</Button>
+      <Button disabled className="rounded-full">
+        Search
+      </Button>
     </div>
   );
 };
