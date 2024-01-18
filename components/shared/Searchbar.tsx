@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 const Searchbar = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-wrap gap-4">
       <Input
         type="text"
         placeholder="Where are you going?"

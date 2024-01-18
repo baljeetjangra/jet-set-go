@@ -42,7 +42,7 @@ const FlightSearch = ({ locations }: { locations: Location[] }) => {
       <FormProvider {...methods}>
         <h1 className="text-xl font-bold">Find your perfect flight</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center flex-wrap gap-8">
             <div className="">
               <FlightInput
                 placeholder="Enter source location"

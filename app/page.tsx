@@ -23,7 +23,7 @@ export default async function Home() {
 
   return (
     <main className={`flex flex-col gap-6 md:ml-56 w-full`}>
-      <div className="bg-gray-100 p-6 flex justify-between">
+      <div className="bg-gray-100 p-6 flex flex-wrap justify-between">
         <Searchbar />
         <Avatar />
       </div>
